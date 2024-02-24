@@ -1,6 +1,7 @@
 @extends("admin.adminLayout")
 @section("title", "Danh sách sản phẩm")
 @section("content")
+
     <style>
         .create-form-container {
             display: none; /* Hide the container by default */
@@ -35,111 +36,143 @@
         }
     </style>
 
-    <div class="d-flex justify-content-around">
-        <div>
-            <button id="showCreateForm">Create new product</button>
-        </div>
-        <div>
-            <input placeholder="Search by name or id..." />
-        </div>
-    </div>
 
-    <div id="createFormContainer" class="create-form-container">
-        <form id="createProductForm" style="display: none;"
-            action="{{ route('dashboard.store') }}"
-            method="POST"
-        >
-            @csrf
-            <table class="table">
-                <tr>
-                    <td class="align-middle col-1">
-                        <input form="createProductForm" class="form-control" name="name"  placeholder="Name..." />
-                    </td>
-                    <td class="align-middle col-1">
-                        <input form="createProductForm" class="form-control" name="price"  placeholder="Price..." />
-                    </td>
-                    <td class="align-middle col-1">
-                        <input form="createProductForm" class="form-control" name="height"  placeholder="Height..." />
-                    </td>
-                    <td class="align-middle col-1">
-                        <input form="createProductForm" class="form-control" name="length_col"  placeholder="Length..." />
-                    </td>
-                    <td class="align-middle col-1">
-                        <input form="createProductForm" class="form-control" name="width"  placeholder="Width..." />
-                    </td>
-                    <td class="align-middle col-1">
-                        <input form="createProductForm" class="form-control" name="base_unit" placeholder="Unit..." />
-                    </td>
-                    <td class="align-middle col-1">
-                        <input form="createProductForm" class="form-control" name="producer"  placeholder="Producer..." />
-                    </td>
-                    <td class="align-middle col-1">
-                        <input form="createProductForm" class="form-control" name="quantity"  placeholder="Quantity..." />
-                    </td>
-                    <td class="align-middle col-1">
-                        <input form="createProductForm" class="form-control bg-dark text-white" type="submit" value="Create"/>
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
+    <div>
+        <div class="d-flex justify-content-around">
+            <div>
+                <button id="showCreateForm" class="btn btn-primary">Create new product</button>
+            </div>
+            <div>
+                <a href="/dashboard/products">
+                    <button id="showCreateForm" class="btn btn-primary btn-success">Product active</button>
+                </a>
+            </div>
+            <div>
+                <a href="/dashboard/products?status=0">
+                    <button id="showCreateForm" class="btn btn-primary btn-warning">Product disable</button>
+                </a>
+            </div>
+            <div>
+                <input type="text" class="form-control" id="searchInput" placeholder="Search by name or id..."
+                />
+            </div>
+        </div>
 
-    <table class="table mt-4">
-        <thead class="thead-dark">
-        <tr class="text-center">
-            <th scope="col" class="align-middle">Id</th>
-            <th scope="col" class="align-middle col-3">Name</th>
-            <th scope="col" class="align-middle">Price</th>
-            <th scope="col" class="align-middle">Height</th>
-            <th scope="col" class="align-middle">Length</th>
-            <th scope="col" class="align-middle">Width</th>
-            <th scope="col" class="align-middle">Base Unit</th>
-            <th scope="col" class="align-middle">Producer</th>
-            <th scope="col" class="align-middle">Quantity</th>
-            <th scope="col" colspan="2" class="align-middle">Option</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach ($products as $product)
+        <div id="createFormContainer" class="create-form-container">
+            <form id="createProductForm" style="display: none;"
+                  action="{{ route('dashboard.store') }}"
+                  method="POST"
+            >
+                @csrf
+                <table class="table">
+                    <tr>
+                        <td class="align-middle col-1">
+                            <input form="createProductForm" class="form-control" name="name"  placeholder="Name..." />
+                        </td>
+                        <td class="align-middle col-1">
+                            <input form="createProductForm" class="form-control" name="price"  placeholder="Price..." />
+                        </td>
+                        <td class="align-middle col-1">
+                            <input form="createProductForm" class="form-control" name="height"  placeholder="Height..." />
+                        </td>
+                        <td class="align-middle col-1">
+                            <input form="createProductForm" class="form-control" name="length_col"  placeholder="Length..." />
+                        </td>
+                        <td class="align-middle col-1">
+                            <input form="createProductForm" class="form-control" name="width"  placeholder="Width..." />
+                        </td>
+                        <td class="align-middle col-1">
+                            <input form="createProductForm" class="form-control" name="base_unit" placeholder="Unit..." />
+                        </td>
+                        <td class="align-middle col-1">
+                            <input form="createProductForm" class="form-control" name="producer"  placeholder="Producer..." />
+                        </td>
+                        <td class="align-middle col-1">
+                            <input form="createProductForm" class="form-control" name="quantity"  placeholder="Quantity..." />
+                        </td>
+                        <td class="align-middle col-1">
+                            <input form="createProductForm" class="form-control bg-dark text-white" type="submit" value="Create"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <table class="table mt-4">
+            <thead class="thead-dark">
             <tr class="text-center">
-                <td class="align-middle">{{ $product->id }}</td>
-                <td class="align-middle"><a href="/dashboard/products/{{$product->id}}">{{ $product->name }}</a></td>
-                <td class="align-middle">{{ $product->price }}</td>
-                <td class="align-middle">{{ $product->height }}</td>
-                <td class="align-middle">{{ $product->length_col }}</td>
-                <td class="align-middle">{{ $product->width }}</td>
-                <td class="align-middle">{{ $product->base_unit }}</td>
-                <td class="align-middle">{{ $product->producer }}</td>
-                <td class="align-middle">{{ $product->quantity }}</td>
-                <td class="align-middle"><a href="/dashboard/products/{{$product->id}}">View</a></td>
-                <td class="align-middle">
-                    <form action="{{ route('dashboard.destroy', ['id' => $product->id]) }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
-                    </form>
-                </td>
+                <th scope="col" class="align-middle">Id</th>
+                <th scope="col" class="align-middle col-3">Name</th>
+                <th scope="col" class="align-middle">Price</th>
+                <th scope="col" class="align-middle">Height</th>
+                <th scope="col" class="align-middle">Length</th>
+                <th scope="col" class="align-middle">Width</th>
+                <th scope="col" class="align-middle">Base Unit</th>
+                <th scope="col" class="align-middle">Producer</th>
+                <th scope="col" class="align-middle">Quantity</th>
+                <th scope="col" colspan="2" class="align-middle">Option</th>
             </tr>
-        @endforeach
-    </table>
-    <div class="pagination">
-        {{ $products->onEachSide(5)->links() }}
-    </div>
+            </thead>
+            <tbody>
+            @foreach ($products as $product)
+                <tr class="text-center">
+                    <td class="align-middle">{{ $product->id }}</td>
+                    <td class="align-middle"><a href="/dashboard/products/{{$product->id}}">{{ $product->name }}</a></td>
+                    <td class="align-middle">{{ $product->price }}</td>
+                    <td class="align-middle">{{ $product->height }}</td>
+                    <td class="align-middle">{{ $product->length_col }}</td>
+                    <td class="align-middle">{{ $product->width }}</td>
+                    <td class="align-middle">{{ $product->base_unit }}</td>
+                    <td class="align-middle">{{ $product->producer }}</td>
+                    <td class="align-middle">{{ $product->quantity }}</td>
+                    @if(request('status') != null)
+                        <td class="align-middle">
+                            <form action="{{ route('products.activate', ['id' => $product->id]) }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-primary btn-success" onclick="return confirm('Are you sure you want to active this product?')">Active</button>
+                            </form>
+                        </td>
+                        <td class="align-middle">
+                            <form action="{{ route('dashboard.delete', ['id' => $product->id]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-primary  btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
+                            </form>
+                        </td>
+                    @else
+                        <td class="align-middle"><a href="/dashboard/products/{{$product->id}}"><button class="btn btn-primary">View</button></a></td>
+                        <td class="align-middle">
+                            <form action="{{ route('dashboard.destroy', ['id' => $product->id]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-primary btn-warning" onclick="return confirm('Are you sure you want to delete this product?')">Disable</button>
+                            </form>
+                        </td>
+                    @endif
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
 
-    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="successModalLabel">Success</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    {{ session('message') }}
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Success</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ session('message') }}
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="pagination d-flex justify-content-center">
+        {{ $products->onEachSide(2)->links() }}
     </div>
 
     <script>

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-use \App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,9 +34,13 @@ Route::middleware(['AdminPermissionValidate'])->group(function () {
 
     Route::post('/dashboard/products/update', [ProductController::class, 'update'])->name('dashboard.update');
 
+    Route::post('/dashboard/products/{id}/activate', [ProductController::class, 'activate'])->name('products.activate');
+
     Route::post('/dashboard/products/store', [ProductController::class, 'store'])->name('dashboard.store');
 
-    Route::delete('/dashboard/products/{id}', [ProductController::class, 'destroy'])->name('dashboard.destroy');
+    Route::delete('/dashboard/products/{id}', [ProductController::class, 'disable'])->name('dashboard.destroy');
+
+    Route::delete('/dashboard/products/delete/{id}', [ProductController::class, 'delete'])->name('dashboard.delete');
 
 });
 

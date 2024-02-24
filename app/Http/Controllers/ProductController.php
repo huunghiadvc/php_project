@@ -14,10 +14,20 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $products = DB::table("products")->paginate(20);
+        $status = $request->input('status', 1);
+        $products = null;
+        if ($status > 0) {
+            $products = DB::table("products")
+                ->where("status", ">=", $status)
+                ->paginate(20);
+        } else {
+            $products = DB::table("products")
+                ->where("status", "=", $status)
+                ->paginate(20);
+        }
+
         return view("admin.products", compact("products"));
     }
 
@@ -105,10 +115,23 @@ class ProductController extends Controller
         }
     }
 
+    public function activate($id)
+    {
+        $product = Product::find($id);
+
+        if (!$product) {
+            abort(404);
+        }
+
+        $product->update(['status' => 1]);
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Product active successfully']);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function disable($id)
     {
         // Find the product by ID
         $product = Product::find($id);
@@ -117,10 +140,26 @@ class ProductController extends Controller
         if (!$product) {
             return redirect()->back()->with('error', 'Product not found');
         }
+        $record = Product::find($id);
 
-        // Delete the product
-        $product->delete();
+        if ($record) {
+            $record->update(['status' => 0]);
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Product disable successfully']);
+        } else {
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Product disable failed']);
+        }
+    }
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Product deleted successfully']);
+    public function delete($id)
+    {
+
+        $record = Product::find($id);
+
+        if ($record) {
+            $record->delete();
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Product deleted successfully']);
+        } else {
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Product deleted failed']);
+        }
     }
 }
