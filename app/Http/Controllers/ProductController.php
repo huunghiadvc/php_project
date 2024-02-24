@@ -46,10 +46,10 @@ class ProductController extends Controller
         //
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'height' => 'required|numeric',
-            'length_col' => 'required|numeric',
-            'width' => 'required|numeric',
+            'price' => 'required|numeric|gt:0',
+            'height' => 'required|numeric|gt:0',
+            'length_col' => 'required|numeric|gt:0',
+            'width' => 'required|numeric|gt:0',
             'base_unit' => 'required|string|max:255',
             'producer' => 'required|string|max:255',
             'quantity' => 'required|integer',
@@ -89,10 +89,10 @@ class ProductController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string',
-            'price' => 'required|numeric',
-            'height' => 'required|numeric',
-            'length_col' => 'required|numeric',
-            'width' => 'required|numeric',
+            'price' => 'required|numeric|gt:0',
+            'height' => 'required|numeric|gt:0',
+            'length_col' => 'required|numeric|gt:0',
+            'width' => 'required|numeric|gt:0',
             'base_unit' => 'required|string',
             'producer' => 'required|string',
             'quantity' => 'required|integer',
