@@ -49,7 +49,7 @@
             </div>
             <div>
                 <a href="/dashboard/products?status=0">
-                    <button id="showCreateForm" class="btn btn-primary btn-warning">Product disable</button>
+                    <button class="btn btn-primary btn-warning">Product disable</button>
                 </a>
             </div>
             <div>
@@ -115,41 +115,43 @@
             </thead>
             <tbody>
             @foreach ($products as $product)
-                <tr class="text-center">
-                    <td class="align-middle">{{ $product->id }}</td>
-                    <td class="align-middle"><a href="/dashboard/products/{{$product->id}}">{{ $product->name }}</a></td>
-                    <td class="align-middle">{{ $product->price }}</td>
-                    <td class="align-middle">{{ $product->height }}</td>
-                    <td class="align-middle">{{ $product->length_col }}</td>
-                    <td class="align-middle">{{ $product->width }}</td>
-                    <td class="align-middle">{{ $product->base_unit }}</td>
-                    <td class="align-middle">{{ $product->producer }}</td>
-                    <td class="align-middle">{{ $product->quantity }}</td>
-                    @if(request('status') != null)
-                        <td class="align-middle">
-                            <form action="{{ route('products.activate', ['id' => $product->id]) }}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-primary btn-success" onclick="return confirm('Are you sure you want to active this product?')">Active</button>
-                            </form>
-                        </td>
-                        <td class="align-middle">
-                            <form action="{{ route('dashboard.delete', ['id' => $product->id]) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-primary  btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
-                            </form>
-                        </td>
-                    @else
-                        <td class="align-middle"><a href="/dashboard/products/{{$product->id}}"><button class="btn btn-primary">View</button></a></td>
-                        <td class="align-middle">
-                            <form action="{{ route('dashboard.destroy', ['id' => $product->id]) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-primary btn-warning" onclick="return confirm('Are you sure you want to delete this product, \n THIS ACTION CAN\'T BE UNDO?')">Disable</button>
-                            </form>
-                        </td>
-                    @endif
-                </tr>
+                @if($product->price != -1)
+                    <tr class="text-center">
+                        <td class="align-middle">{{ $product->id }}</td>
+                        <td class="align-middle"><a href="/dashboard/products/{{$product->id}}">{{ $product->name }}</a></td>
+                        <td class="align-middle">{{ $product->price }}</td>
+                        <td class="align-middle">{{ $product->height }}</td>
+                        <td class="align-middle">{{ $product->length_col }}</td>
+                        <td class="align-middle">{{ $product->width }}</td>
+                        <td class="align-middle">{{ $product->base_unit }}</td>
+                        <td class="align-middle">{{ $product->producer }}</td>
+                        <td class="align-middle">{{ $product->quantity }}</td>
+                        @if(request('status') != null)
+                            <td class="align-middle">
+                                <form action="{{ route('products.activate', ['id' => $product->id]) }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary btn-success" onclick="return confirm('Are you sure you want to active this product?')">Active</button>
+                                </form>
+                            </td>
+                            <td class="align-middle">
+                                <form action="{{ route('dashboard.delete', ['id' => $product->id]) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-primary  btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
+                                </form>
+                            </td>
+                        @else
+                            <td class="align-middle"><a href="/dashboard/products/{{$product->id}}"><button class="btn btn-primary">View</button></a></td>
+                            <td class="align-middle">
+                                <form action="{{ route('dashboard.destroy', ['id' => $product->id]) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-primary btn-warning" onclick="return confirm('Are you sure you want to delete this product, \n THIS ACTION CAN\'T BE UNDO?')">Disable</button>
+                                </form>
+                            </td>
+                        @endif
+                    </tr>
+                @endif
             @endforeach
             </tbody>
         </table>
