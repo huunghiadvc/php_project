@@ -28,10 +28,10 @@ class AdminPermissionValidate
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $authUser = Auth::user();
+        $user = Auth::user();
 
-        if ($authUser != null) {
-            if ($this->isAdmin($authUser)) {
+        if ($user != null) {
+            if ($this->isAdmin($user)) {
                 return $next($request);
             }
             return redirect('/error')->with('error', 'You do not have permission to access the dashboard.');

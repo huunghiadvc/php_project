@@ -145,7 +145,7 @@
                             <form action="{{ route('dashboard.destroy', ['id' => $product->id]) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-primary btn-warning" onclick="return confirm('Are you sure you want to delete this product?')">Disable</button>
+                                <button type="submit" class="btn btn-primary btn-warning" onclick="return confirm('Are you sure you want to delete this product, \n THIS ACTION CAN\'T BE UNDO?')">Disable</button>
                             </form>
                         </td>
                     @endif
