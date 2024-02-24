@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
+use \App\Http\Controllers\ErrorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,7 @@ Route::middleware(['AdminPermissionValidate'])->group(function () {
 
     Route::get('/dashboard/products/{id}', [ProductController::class, 'show'])->name('dashboard.product');
 
-    Route::post('/dashboard/products/update', [ProductController::class, 'update'])->name('dashboard.update');
+    Route::put('/dashboard/products/{id}/update', [ProductController::class, 'update'])->name('dashboard.update');
 
     Route::post('/dashboard/products/{id}/activate', [ProductController::class, 'activate'])->name('products.activate');
 
@@ -44,3 +45,6 @@ Route::middleware(['AdminPermissionValidate'])->group(function () {
 
 });
 
+Route::get('/error', function () {
+    return view('error');
+})->name('error.permission');

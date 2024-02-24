@@ -48,28 +48,28 @@
                     </form>
                 </td>
                 <td class="align-middle col-1">
-                    <input form="form" class="form-control" name="name"  placeholder="Name..." />
+                    <input form="form" class="form-control" name="name" value={{$product->name}}  placeholder="Name..." />
                 </td>
                 <td class="align-middle col-1">
-                    <input form="form" class="form-control" name="price"  placeholder="Price..." />
+                    <input form="form" class="form-control" name="price" value={{$product->price}}  placeholder="Price..." />
                 </td>
                 <td class="align-middle col-1">
-                    <input form="form" class="form-control" name="height"  placeholder="Height..." />
+                    <input form="form" class="form-control" name="height" value={{$product->height}}  placeholder="Height..." />
                 </td>
                 <td class="align-middle col-1">
-                    <input form="form" class="form-control" name="length_col"  placeholder="Length..." />
+                    <input form="form" class="form-control" name="length_col" value={{$product->length_col}}  placeholder="Length..." />
                 </td>
                 <td class="align-middle col-1">
-                    <input form="form" class="form-control" name="width"  placeholder="Width..." />
+                    <input form="form" class="form-control" name="width" value={{$product->width}}  placeholder="Width..." />
                 </td>
                 <td class="align-middle col-1">
-                    <input form="form" class="form-control" name="base_unit" placeholder="Unit..." />
+                    <input form="form" class="form-control" name="base_unit" value={{$product->base_unit}} placeholder="Unit..." />
                 </td>
                 <td class="align-middle col-1">
-                    <input form="form" class="form-control" name="producer"  placeholder="Producer..." />
+                    <input form="form" class="form-control" name="producer" value={{$product->producer}}  placeholder="Producer..." />
                 </td>
                 <td class="align-middle col-1">
-                    <input form="form" class="form-control" name="quantity"  placeholder="Quantity..." />
+                    <input form="form" class="form-control" name="quantity" value={{$product->quantity}} placeholder="Quantity..." />
                 </td>
                 <td class="align-middle col-1">
                     <input form="form" class="form-control bg-dark text-white" type="submit" value="Update"/>
