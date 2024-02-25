@@ -45,13 +45,13 @@ class ProductController extends Controller
     {
         //
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|gt:0',
-            'height' => 'required|numeric|gt:0',
-            'length_col' => 'required|numeric|gt:0',
-            'width' => 'required|numeric|gt:0',
-            'base_unit' => 'required|string|max:255',
-            'producer' => 'required|string|max:255',
+            'name' => 'required|string',
+            'price' => 'required|numeric',
+            'height' => 'required|numeric',
+            'length_col' => 'required|numeric',
+            'width' => 'required|numeric',
+            'base_unit' => 'required|string',
+            'producer' => 'required|string',
             'quantity' => 'required|integer',
             'inserted_at' => now(),
             'inserted_by' => Auth::user()
@@ -87,23 +87,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string',
-            'price' => 'required|numeric|gt:0',
-            'height' => 'required|numeric|gt:0',
-            'length_col' => 'required|numeric|gt:0',
-            'width' => 'required|numeric|gt:0',
-            'base_unit' => 'required|string',
-            'producer' => 'required|string',
-            'quantity' => 'required|integer',
-            'update_at' => now(),
-            'updated_by' => Auth::user()
-        ]);
+        $data = array_filter($request->except(['_token', '_method']), function($value) {
+            return !is_null($value) && $value !== '';
+        });
 
         try {
             DB::table("products")
                 -> where("id", $id)
-                -> update($validatedData);
+                -> update($data);
             return redirect()
                 -> route('dashboard.product', ['id' => $id])
                 -> with('success', 'Product updated successfully!');
